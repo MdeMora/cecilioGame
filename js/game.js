@@ -22,6 +22,7 @@ const game = {
     fkCounter:0,
     fklife:100,
     fkDmg:1,
+    fkLife:100,
 
     init(){
         this.canvas=document.getElementById("myCanvas")
@@ -40,6 +41,7 @@ const game = {
             this.clear()
             this.drawAll()
             this.moveAll()
+            this.ceci.loadSuper(this.framesCounter)
             
             if(this.framesCounter % 20 == 0) this.actions()
         }, 1000 / this.fps)
@@ -54,11 +56,12 @@ const game = {
         if(this.arrFlacos[this.fkCounter].isDead){
             // console.log("Flaquito muerto")
             this.fkCounter++
+            this.fkLife+=20
             // console.log("Añadiendo flaco")
             this.arrFlacos.push(new Flaco(this.ctx,this.canvas.width,this.canvas.height))
-            this.arrFlacos[this.fkCounter].life += 20
-            this.arrFlacos[this.fkCounter].dmg += 0.5
-            console.log(`arrFlacos ${this.arrFlacos}`)
+            this.arrFlacos[this.fkCounter].life = this.fkLife
+            console.log(this.arrFlacos[this.fkCounter].life)
+            this.arrFlacos[this.fkCounter].dmg += 1
             this.ceci.setCurrentTarget(this.arrFlacos[this.fkCounter])
         }
     },

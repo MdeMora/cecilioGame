@@ -5,7 +5,7 @@ class Flaco {
     this.gameHeight = h;
 
     this.image = new Image();
-    this.image.src = "img/cecimini.png";
+    this.image.src = "img/ceciminiTransparent.png";
 
     this.width = 440;
     this.height = 440;

@@ -9,7 +9,7 @@ class Razor{
         this.image.src = "img/itemPlaceholder.png"
         this.posX = this.gameWidth *0.03 + 40
         this.posY = 50
-        this.uses = 0;
+        this.uses = 1;
     }
 
     getUses(){
@@ -33,6 +33,6 @@ class Razor{
         this.ctx.drawImage(this.image,this.posX,this.posY,this.width,this.height)
         this.ctx.font = '18px Arial';
         this.ctx.fillStyle = 'white';
-        this.ctx.fillText(`${this.uses}`, this.posX, this.posY-this.height-5);
+        this.ctx.fillText(`${this.uses}`, this.posX+15, 40);
     }
 }

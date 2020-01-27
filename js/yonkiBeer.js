@@ -33,6 +33,6 @@ class Beer{
         this.ctx.drawImage(this.image,this.posX,this.posY,this.width,this.height)
         this.ctx.font = '18px Arial';
         this.ctx.fillStyle = 'white';
-        this.ctx.fillText(`${this.uses}`, this.posX, this.posY-this.height-5);
+        this.ctx.fillText(`${this.uses}`, this.posX+15, 40);
     }
 }

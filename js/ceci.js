@@ -5,7 +5,7 @@ class Ceci {
     this.gameHeight = h
 
     this.image = new Image()
-    this.image.src = "img/cecimini.png"
+    this.image.src = "img/ceciminiTransparent.png"
     this.bgMusic = new Sound("ceciKush.mp3")
 
     this.width = 440
@@ -20,8 +20,9 @@ class Ceci {
 
     this.keys = keyCode
 
-    this.life=100
+    this.life=200
     this.dmg=5
+    this.superDmg=0
 
     this.beer= new Beer(this.ctx,this.gameWidth,this.gameHeight)
     this.razor= new Razor(this.ctx,this.gameWidth,this.gameHeight)
@@ -30,6 +31,7 @@ class Ceci {
 
     this.currentTarget = undefined
 
+    this.isSuper = false
     this.isDead = false
 
     this.setListeners() //Llamamos al listener para que desde el primer momento el jugador responda.
@@ -49,6 +51,7 @@ class Ceci {
       )
       
     this.drawLifeBar()
+    this.drawSuperBar()
     this.drawItems()
     this.animate(framesCounter) //Funcion que anima los frames.
   }
@@ -69,6 +72,20 @@ class Ceci {
   attack(){
     return this.dmg
   }
+  superAttack(){
+    return this.superDmg
+  }
+
+  loadSuper(framesCounter){
+    if(this.superDmg<=100){
+      if(framesCounter % 100 == 0){
+        this.superDmg+=10
+      }
+    }else{
+      this.isSuper = true
+    }
+  }
+
 
   recieveDamage(dmg){
     if(this.life <= 0){
@@ -77,6 +94,16 @@ class Ceci {
       this.life -= dmg
     }
   }
+
+  drawSuperBar(){
+    this.ctx.fillStyle = 'black'
+    this.ctx.strokeRect(this.posX, this.posY-90, 100, 30)
+    this.ctx.fillStyle = 'white'
+    this.ctx.fillRect(this.posX, this.posY-90, 100, 30)
+    this.ctx.fillStyle = 'blue'
+    this.ctx.fillRect(this.posX, this.posY-90, this.superDmg, 30)
+  }
+  
 
   drawLifeBar(){
     this.ctx.fillStyle = 'black'
@@ -109,7 +136,10 @@ class Ceci {
           this.dmg += this.razor.action()
           break
         case this.keys.E:
-          console.log("No estoy implementado")
+          if(this.isSuper){
+            this.currentTarget.recieveDamage(this.superAttack())
+            this.superDmg=0
+          }
           break
         case this.keys.SPACE:
           console.log("Click space")
