@@ -23,6 +23,11 @@ class Ceci {
     this.life=100
     this.dmg=5
 
+    this.beer= new Beer(this.ctx,this.gameWidth,this.gameHeight)
+    this.razor= new Razor(this.ctx,this.gameWidth,this.gameHeight)
+    this.cigar= new Cigar(this.ctx,this.gameWidth,this.gameHeight)
+    
+
     this.currentTarget = undefined
 
     this.isDead = false
@@ -44,12 +49,10 @@ class Ceci {
       )
       
     this.drawLifeBar()
+    this.drawItems()
     this.animate(framesCounter) //Funcion que anima los frames.
   }
 
-  setItems(){
-    this.arrBeers.push(new yonkiBeer(this.ctx,this.w)
-  }
   setCurrentTarget(obj){
     this.currentTarget=obj
   }
@@ -84,20 +87,37 @@ class Ceci {
     this.ctx.fillRect(this.posX, this.posY-50, this.life*2, 30)
   }
 
+  drawItems(){
+    this.beer.draw()
+    this.razor.draw()
+    this.cigar.draw()
+  }
+
   setListeners() {
     document.onkeypress = e => {
       switch (e.keyCode) {
         case this.keys.ZETA:
           this.currentTarget.recieveDamage(this.attack())
-          
           break
         case this.keys.X:
           this.currentTarget.recieveDamage(this.attack())
+          break
+        case this.keys.Q:
+          this.life += this.beer.action()
+          break
+        case this.keys.W:
+          this.dmg += this.razor.action()
+          break
+        case this.keys.E:
+          console.log("No estoy implementado")
           break
         case this.keys.SPACE:
           console.log("Click space")
           this.bgMusic.play();
           break
+        default :
+          console.log(e.keyCode)
+        break
       }
     }
   }

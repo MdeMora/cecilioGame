@@ -1,4 +1,4 @@
-class Beer{
+class Cigar{
     constructor(ctx,w,h){
         this.ctx=ctx
         this.gameWidth = w
@@ -7,9 +7,9 @@ class Beer{
         this.height = 30
         this.image = new Image()
         this.image.src = "img/itemPlaceholder.png"
-        this.posX = this.gameWidth *0.03
+        this.posX = this.gameWidth *0.03 + 80
         this.posY = 50
-        this.uses = 2;
+        this.uses = 0;
     }
 
     getUses(){
@@ -23,9 +23,9 @@ class Beer{
     action(){
         if(this.uses>0){
             this.uses--
-            return 40
+            return 90
         }else{
-            return -20
+            return -100
         }
     }
         

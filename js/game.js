@@ -13,7 +13,10 @@ const game = {
     keys:{
         SPACE: 32,
         ZETA: 122,
-        X:120
+        X:120,
+        Q:113,
+        W:119,
+        E:101
     },
     arrFlacos:[],
     fkCounter:0,

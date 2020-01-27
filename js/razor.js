@@ -1,20 +1,38 @@
-class yonkiBeer{
+class Razor{
     constructor(ctx,w,h){
-        this.ctx = ctx
+        this.ctx=ctx
         this.gameWidth = w
         this.gameHeight = h
-
-        this.image = new Image()
-        this.image.src = "img/itemPlaceholder.png"
-
         this.width = 30
         this.height = 30
-
-        this.posX = this.gameWidth *0.65
-        this.posY = this.gameHeight - this.height
-
+        this.image = new Image()
+        this.image.src = "img/itemPlaceholder.png"
+        this.posX = this.gameWidth *0.03 + 40
+        this.posY = 50
+        this.uses = 0;
     }
-        increaseDmg(){
-            return 20
+
+    getUses(){
+        return this.uses
+    }
+
+    setUses(num){
+        this.uses = num
+    }
+    
+    action(){
+        if(this.uses>0){
+            this.uses--
+            return 5
+        }else{
+            return -1
         }
     }
+        
+    draw(){
+        this.ctx.drawImage(this.image,this.posX,this.posY,this.width,this.height)
+        this.ctx.font = '18px Arial';
+        this.ctx.fillStyle = 'white';
+        this.ctx.fillText(`${this.uses}`, this.posX, this.posY-this.height-5);
+    }
+}
