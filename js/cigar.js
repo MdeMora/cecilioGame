@@ -9,7 +9,7 @@ class Cigar{
         this.image.src = "img/ntd/poro.jpeg"
         this.posX = this.gameWidth *0.03 + 80
         this.posY = 50
-        this.uses = 0;
+        this.uses = 10;
     }
 
     getUses(){

@@ -18,9 +18,7 @@ class Ceci {
     this.image.src = "img/ceciminiTransparent.png"
     this.image.frames = 3 //Indicamos el numero de frames que tiene la imagen
     this.image.framesIndex = 0 //Frame actual menos 1, lo usaremos para recortar la imagen en drawImage
-    
-    this.bgMusic = new Sound("msc/ceciKush.mp3")
-    
+        
     this.attackAImg= new Image()
     this.attackAImg.src = "img/attack1.png"
     this.attackAImg.frames = 7
@@ -41,7 +39,12 @@ class Ceci {
     this.razorEffect.src = "img/razor.png"
     this.razorEffect.framesIndex = 0
 
+    this.superEffect = new Image()
+    this.superEffect.frames = 4
+    this.superEffect.src = "img/super.png"
+    this.superEffect.framesIndex = 0
 
+    this.bgMusic = new Sound("msc/ceciKush.mp3")
     
     this.keys = keyCode
     this.isDialoging = isDialoging
@@ -54,7 +57,6 @@ class Ceci {
     this.razor= new Razor(this.ctx,this.gameWidth,this.gameHeight)
     this.cigar= new Cigar(this.ctx,this.gameWidth,this.gameHeight)
     
-
     this.currentTarget = undefined
 
     this.isSuper = false
@@ -63,10 +65,12 @@ class Ceci {
     this.wantAttackBMotion=false
     this.wantHealMotion=false
     this.wantRazorMotion=false
+    this.wantSuperMotion=false
+    this.wantSmokeMotion=false
 
     this.setListeners() //Llamamos al listener para que desde el primer momento el jugador responda.
   }
-
+// -----ANIMACIONES Y DIBUJADOS--------
   draw() {
     this.ctx.drawImage(
       this.image,
@@ -90,8 +94,10 @@ class Ceci {
   drawAnimations(){
     this.attackADraw()
     this.attackBDraw()
+    this.healDraw()
+    this.razorDraw()
+    this.superDraw()
   }
-
   dialogueDraw(){
     this.ctx.drawImage(
       this.image,
@@ -140,11 +146,6 @@ class Ceci {
     this.deadAnimate() //Funcion que anima los frames.
     
   }
-
-  setCurrentTarget(obj){
-    this.currentTarget=obj
-  }
-
   animate() {
     if (this.framesCounter % 20 == 0) {
       this.image.framesIndex++ //Cambiamos el frame de la imagen cada 5 fps.
@@ -153,7 +154,6 @@ class Ceci {
       }
     }
   }
-
   deadAnimate() {
     if (this.framesCounter % 20 == 0) {
       this.image.framesIndex++ //Cambiamos el frame de la imagen cada 5 fps.
@@ -162,16 +162,6 @@ class Ceci {
       }
     }
   }
-
-  attack(){
-    return this.dmg
-  }
-  
-  //se podrian reducir a una funcion utilizando un parametro para añadir/reducir daño
-  superAttack(){
-    return this.superDmg
-  }
-
   attackADraw(){
     this.randomNumber ? null : this.randomNumber = Math.random()
     if(this.wantAttackAMotion){
@@ -190,7 +180,6 @@ class Ceci {
     }   
     // this.animateAttack() //Funcion que anima los frames.
   }
-
   attackBDraw(){
     this.randomNumber ? null : this.randomNumber = Math.random()
     if(this.wantAttackBMotion){
@@ -208,9 +197,57 @@ class Ceci {
         this.animateAttackB()
     }
   // this.animateAttack() //Funcion que anima los frames.
-}
-  //animateattack dice activar la animacion
-  //cuando llega el ultimo sprite dice desactivar animacion
+  }
+  healDraw(){
+    if(this.wantHealMotion){
+      this.ctx.drawImage(
+        this.healEffect,
+        this.healEffect.framesIndex * Math.floor(this.healEffect.width / this.healEffect.frames), //Punto x donde empieza a recortar
+        0, //Punto y donde empieza a recortar
+        Math.floor(this.healEffect.width / this.healEffect.frames), //Punto x donde termina de recortar
+        this.healEffect.height, //Punto y donde termina de recortar
+        this.posX,
+        this.posY,
+        this.width/2,
+        this.height/2,
+        )
+        this.animateHeal()
+    }
+  }
+  razorDraw(){
+    if(this.wantRazorMotion){
+      this.ctx.drawImage(
+        this.razorEffect,
+        this.razorEffect.framesIndex * Math.floor(this.razorEffect.width / this.razorEffect.frames), //Punto x donde empieza a recortar
+        0, //Punto y donde empieza a recortar
+        Math.floor(this.razorEffect.width / this.razorEffect.frames), //Punto x donde termina de recortar
+        this.razorEffect.height, //Punto y donde termina de recortar
+        this.posX,
+        this.posY,
+        this.width/2,
+        this.height/2,
+        )
+        this.animateRazor()
+    }
+  }
+  smokeDraw(){}
+  superDraw(){
+    this.randomNumber ? null : this.randomNumber = Math.random()
+    if(this.wantSuperMotion){
+      this.ctx.drawImage(
+        this.superEffect,
+        this.superEffect.framesIndex * Math.floor(this.superEffect.width / this.superEffect.frames), //Punto x donde empieza a recortar
+        0, //Punto y donde empieza a recortar
+        Math.floor(this.superEffect.width / this.superEffect.frames), //Punto x donde termina de recortar
+        this.superEffect.height, //Punto y donde termina de recortar
+        this.currentTarget.posX,
+        this.currentTarget.posY,
+        this.width,
+        this.height,
+        )
+        this.animateSuper()
+    }
+  }
   animateAttackA(){ 
     if (this.framesCounter % 2 === 0) {
       this.attackAImg.framesIndex++ //Cambiamos el frame de la imagen cada 5 fps.
@@ -221,7 +258,6 @@ class Ceci {
       }
     }
   }
-
   animateAttackB(){ 
     if (this.framesCounter % 2 == 0) {
       this.attackBImg.framesIndex++ //Cambiamos el frame de la imagen cada 5 fps.
@@ -231,6 +267,51 @@ class Ceci {
         this.randomNumber = undefined
       }
     }
+  }
+  animateHeal(){
+    if (this.framesCounter % 4 === 0) {
+      this.healEffect.framesIndex++ //Cambiamos el frame de la imagen cada 5 fps.
+      if (this.healEffect.framesIndex > this.healEffect.frames ) {
+        this.healEffect.framesIndex = 0
+        this.wantHealMotion=false
+      }
+    }
+  }
+  animateRazor(){
+    if (this.framesCounter % 4 === 0) {
+      this.razorEffect.framesIndex++ //Cambiamos el frame de la imagen cada 5 fps.
+      if (this.razorEffect.framesIndex > this.razorEffect.frames ) {
+        this.razorEffect.framesIndex = 0
+        this.wantRazorMotion=false
+      }
+    }
+  }
+  animateSmoke(){
+
+  }
+  animateSuper(){
+    if (this.framesCounter % 5 === 0) {
+      this.superEffect.framesIndex++ //Cambiamos el frame de la imagen cada 5 fps.
+      if (this.superEffect.framesIndex > this.superEffect.frames ) {
+        this.superEffect.framesIndex = 0
+        this.wantSuperMotion=false
+        this.randomNumber = undefined
+      }
+    }
+  }
+
+
+  //----------------COMBATE---------
+
+  setCurrentTarget(obj){
+    this.currentTarget=obj
+  }
+  attack(){
+    return this.dmg
+  }
+  //se podrian reducir a una funcion utilizando un parametro para añadir/reducir daño
+  superAttack(){
+    return this.superDmg
   }
 
   loadSuper(){
@@ -249,6 +330,7 @@ class Ceci {
       this.life -= dmg
     }
   }
+  //----------------INTERFAZ-----------------
   drawSuperBar(){
     this.ctx.fillStyle = 'black'
     this.ctx.strokeRect(this.posX, this.posY-40, 100, 30)
@@ -270,7 +352,7 @@ class Ceci {
     this.razor.draw()
     this.cigar.draw()
   }
-
+  //----------------LISTENER------------------
   setListeners() {
     document.onkeypress = e => {
       if(!this.isDialoging){
@@ -288,7 +370,7 @@ class Ceci {
           this.life += this.beer.action()
             break
         case this.keys.W:
-          this.wantMotion=true
+          this.wantRazorMotion=true
           this.dmg += this.razor.action()
             break
         case this.keys.E:
@@ -296,8 +378,10 @@ class Ceci {
             break
         case this.keys.SPACE:
           if(this.isSuper){
+            this.wantSuperMotion=true
             this.currentTarget.recieveDamage(this.superAttack())
             this.superDmg=0
+            this.isSuper=false
           }
           this.bgMusic.play();
             break

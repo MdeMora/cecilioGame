@@ -18,7 +18,7 @@ const game = {
         W:119,
         E:101
     },
-    arrFlacos:[],
+    arrFlacos:[], // ARREGLAR ESTO CON PUSH Y POP Y ESO
     fkCounter:0,
     fklife:100,
     fkDmg:1,
@@ -26,6 +26,7 @@ const game = {
     stage:1,
     isDialoging:false,
 
+    //------FUNCIONES BASICAS DEL JUEGO------
     init(){
         this.canvas=document.getElementById("myCanvas")
         this.ctx= this.canvas.getContext("2d")
@@ -76,15 +77,15 @@ const game = {
 
                 this.clear
                 this.winDrawAll()
-                console.log("cambiame")
             }
 
         }, 1000 / this.fps)
-    },
+    },//INTERVALO
     clear(){
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     },
 
+    //------ STAGE 1 - FLACO ----------
     flacoActions(){
         this.ceci.recieveDamage(this.arrFlacos[this.fkCounter].attack())
         if(this.ceci.isDead){
@@ -123,6 +124,15 @@ const game = {
         this.ceci.drawAnimations()
     }, 
 
+    //------ STAGE 2- DIALOG--------
+    dialogueDraw(){
+        this.clear()
+        this.back.draw()
+        this.tangana.staticDraw()
+        this.ceci.dialogueDraw()
+    },
+
+    //------ STAGE 2 - BOSSFIGHT ----------
     setBossFight(){
         this.back.image.src="img/bg4.jpg"
         this.ceci.setCurrentTarget(this.tangana)
@@ -146,11 +156,11 @@ const game = {
         this.ceci.draw()
         this.tangana.motionDraw(this.framesCounter)
     },
-
     bossActions(){
         console.log("he sido llamado")
         this.ceci.recieveDamage(this.tangana.attack())
         if(this.ceci.isDead){
+            this.tangana.image.src="img/tangawin.png"
             this.gameOver()
         }
         if(this.tangana.isDead){
@@ -158,12 +168,7 @@ const game = {
         }
     },
 
-    dialogueDraw(){
-        this.clear()
-        this.back.draw()
-        this.tangana.staticDraw()
-        this.ceci.dialogueDraw()
-    },
+    //------ STAGE 4 - WIN ----------
     winDrawAll(){
         this.back.image.src="img/bg2.png"
         this.tangana.image.src="img/deadTangana.png"
@@ -176,6 +181,7 @@ const game = {
         console.log("HAS GANADO PERO SIGUES SIENDO UN PANOLI")
     },
 
+    //-------STAGE 3 - PANOLI- -------
     endDrawAll(){
         
         this.back.image.src="img/endBG.png"
