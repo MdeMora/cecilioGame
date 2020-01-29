@@ -6,10 +6,10 @@ class Razor{
         this.width = 30
         this.height = 30
         this.image = new Image()
-        this.image.src = "img/itemPlaceholder.png"
+        this.image.src = "img/ntd/navaj.jpeg"
         this.posX = this.gameWidth *0.03 + 40
         this.posY = 50
-        this.uses = 1;
+        this.uses = 0;
     }
 
     getUses(){
@@ -25,14 +25,14 @@ class Razor{
             this.uses--
             return 5
         }else{
-            return -1
+            return -0.1
         }
     }
         
     draw(){
-        this.ctx.drawImage(this.image,this.posX,this.posY,this.width,this.height)
+        this.ctx.drawImage(this.image,this.posX,this.posY+50,this.width,this.height)
         this.ctx.font = '18px Arial';
         this.ctx.fillStyle = 'white';
-        this.ctx.fillText(`${this.uses}`, this.posX+15, 40);
+        this.ctx.fillText(`${this.uses}`, this.posX+15, 90);
     }
 }

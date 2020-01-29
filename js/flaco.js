@@ -1,14 +1,14 @@
 class Flaco {
-    constructor(ctx,w,h){
+    constructor(ctx,w,h,player){
     this.ctx = ctx;
     this.gameWidth = w;
     this.gameHeight = h;
 
     this.image = new Image();
-    this.image.src = "img/ceciminiTransparent.png";
+    this.image.src = "img/flaco.png";
 
-    this.width = 440;
-    this.height = 440;
+    this.width = 400;
+    this.height = 400;
 
     this.posX = this.gameWidth *0.65;
     this.posY = this.gameHeight - this.height;
@@ -22,8 +22,10 @@ class Flaco {
     this.dmg=2
 
     this.isDead = false
-    this.barW = this.life*2
+    this.barW = this.life
 
+    this.player = player
+    console.log(this.dmg)
   }
 
   attack(){
@@ -41,10 +43,6 @@ class Flaco {
   draw(framesCounter) {
     this.ctx.drawImage(
       this.image,
-      this.image.framesIndex * Math.floor(this.image.width / this.image.frames), //Punto x donde empieza a recortar
-      0, //Punto y donde empieza a recortar
-      Math.floor(this.image.width / this.image.frames), //Punto x donde termina de recortar
-      this.image.height, //Punto y donde termina de recortar
       this.posX,
       this.posY,
       this.width,
@@ -52,17 +50,37 @@ class Flaco {
     );
     
     this.drawLifeBar()
-    this.animate(framesCounter); //Funcion que anima los frames.
+    // this.animate(framesCounter); //Funcion que anima los frames.
   }
   drawLifeBar(){
     this.ctx.fillStyle = 'black'
-    this.ctx.strokeRect(this.posX, this.posY-50, this.barW, 30)
+    this.ctx.strokeRect(this.posX+50, this.posY-40, this.barW, 30)
     this.ctx.fillStyle = 'white'
-    this.ctx.fillRect(this.posX, this.posY-50, this.barW, 30)
+    this.ctx.fillRect(this.posX+50, this.posY-40, this.barW, 30)
     this.ctx.fillStyle = 'red'
-    this.ctx.fillRect(this.posX, this.posY-50, this.life*2, 30)
+    this.ctx.fillRect(this.posX+50, this.posY-40, this.life, 30)
   }
 
+  rngItems(){
+    let rng = Math.random()*100
+    console.log("Rng Items llamado")
+    console.log(rng)
+
+    if(this.isDead){
+      if(rng <= 15){
+        console.log("Beer ++")
+        this.player.beer.uses++
+      }else if(rng>15&&rng<=45){
+        console.log("cigar ++")
+
+        this.player.cigar.uses++
+      }else if(rng>45&&rng<=50){
+        console.log("razor ++")
+
+        this.player.razor.uses++
+      }
+    }
+  }
 
   animate(framesCounter) {
     if (framesCounter % 30 == 0) {

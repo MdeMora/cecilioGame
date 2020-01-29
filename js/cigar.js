@@ -6,7 +6,7 @@ class Cigar{
         this.width = 30
         this.height = 30
         this.image = new Image()
-        this.image.src = "img/itemPlaceholder.png"
+        this.image.src = "img/ntd/poro.jpeg"
         this.posX = this.gameWidth *0.03 + 80
         this.posY = 50
         this.uses = 0;
@@ -25,14 +25,14 @@ class Cigar{
             this.uses--
             return 90
         }else{
-            return -100
+            return -10
         }
     }
         
     draw(){
-        this.ctx.drawImage(this.image,this.posX,this.posY,this.width,this.height)
+        this.ctx.drawImage(this.image,this.posX,this.posY+50,this.width,this.height)
         this.ctx.font = '18px Arial';
         this.ctx.fillStyle = 'white';
-        this.ctx.fillText(`${this.uses}`, this.posX+15, 40);
+        this.ctx.fillText(`${this.uses}`, this.posX+15, 90);
     }
 }
