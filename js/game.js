@@ -51,24 +51,29 @@ const game = {
             if (this.framesCounter > 1000) this.framesCounter = 0
 //switch
             if(this.stage===1){
+                this.ceci.framesCounter=this.framesCounter
                 this.clear()
                 this.flacoDrawAll()
-                this.ceci.loadSuper(this.framesCounter)
+                this.ceci.loadSuper()
                 if(this.framesCounter % 25 == 0) this.flacoActions()
 
             }else if(this.stage===2){
+                this.ceci.framesCounter=this.framesCounter
                 
                 if(!this.isDialoging){
                     this.bossDrawAll()
-                    this.ceci.loadSuper(this.framesCounter)
+                    this.ceci.loadSuper()
                     if(this.framesCounter % 15 == 0) this.bossActions()
                 }
 
             }else if(this.stage===3){
+                this.ceci.framesCounter=this.framesCounter
 
                 this.clear
                 this.endDrawAll()
             }else if(this.stage===4){
+                this.ceci.framesCounter=this.framesCounter
+
                 this.clear
                 this.winDrawAll()
                 console.log("cambiame")
@@ -113,8 +118,9 @@ const game = {
     
     flacoDrawAll(){
         this.back.draw()
-        this.ceci.draw(this.framesCounter)
         this.arrFlacos[this.fkCounter].draw(this.framesCounter)
+        this.ceci.draw()
+        this.ceci.drawAnimations()
     }, 
 
     setBossFight(){
@@ -137,7 +143,7 @@ const game = {
     },
     bossDrawAll(){
         this.back.draw()
-        this.ceci.draw(this.framesCounter)
+        this.ceci.draw()
         this.tangana.motionDraw(this.framesCounter)
     },
 
@@ -156,13 +162,13 @@ const game = {
         this.clear()
         this.back.draw()
         this.tangana.staticDraw()
-        this.ceci.dialogueDraw(this.framesCounter)
+        this.ceci.dialogueDraw()
     },
     winDrawAll(){
         this.back.image.src="img/bg2.png"
         this.tangana.image.src="img/deadTangana.png"
         this.back.draw()
-        this.ceci.winDraw(this.framesCounter)
+        this.ceci.winDraw()
         this.tangana.staticDraw()
     },
     gameWin(){
@@ -178,7 +184,7 @@ const game = {
         this.ceci.posX=0
 
         this.back.draw()
-        this.ceci.deadDraw(this.framesCounter)
+        this.ceci.deadDraw()
         this.tangana.staticDraw()
         
     },
