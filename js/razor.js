@@ -23,7 +23,7 @@ class Razor{
     action(){
         if(this.uses>0){
             this.uses--
-            return 5
+            return 3
         }else{
             return -0.1
         }

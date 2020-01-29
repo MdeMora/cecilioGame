@@ -25,7 +25,7 @@ class Beer{
             this.uses--
             return 40
         }else{
-            return -1
+            return -10
         }
     }
         

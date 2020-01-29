@@ -5,7 +5,7 @@ class Tangana {
     this.gameHeight = h;
 
     this.image = new Image();
-    this.image.src = "img/ctSprite.png";
+    this.image.src = "img/tangawin.png";
 
     this.width = 440;
     this.height = 440;
@@ -18,14 +18,13 @@ class Tangana {
 
     this.setListeners(); //Llamamos al listener para que desde el primer momento el jugador responda.
 
-    this.life=300
-    this.dmg=15
+    this.life=800
+    this.dmg=2.5
 
     this.isDead = false
-    this.barW = this.life
+    this.barW = this.life/3
 
     this.player = player
-    console.log(this.dmg)
   }
 
   attack(){
@@ -40,7 +39,7 @@ class Tangana {
     }
   }
 
-  draw(framesCounter) {
+  motionDraw(framesCounter) {
     this.ctx.drawImage(
       this.image,
       this.image.framesIndex * Math.floor(this.image.width / this.image.frames), //Punto x donde empieza a recortar
@@ -56,36 +55,6 @@ class Tangana {
     this.drawLifeBar()
     this.animate(framesCounter); //Funcion que anima los frames.
   }
-  drawLifeBar(){
-    this.ctx.fillStyle = 'black'
-    this.ctx.strokeRect(this.posX+50, this.posY, this.barW, 30)
-    this.ctx.fillStyle = 'white'
-    this.ctx.fillRect(this.posX+50, this.posY, this.barW, 30)
-    this.ctx.fillStyle = 'red'
-    this.ctx.fillRect(this.posX+50, this.posY, this.life, 30)
-  }
-
-//   rngItems(){
-//     let rng = Math.random()*100
-//     console.log("Rng Items llamado")
-//     console.log(rng)
-
-//     if(this.isDead){
-//       if(rng <= 15){
-//         console.log("Beer ++")
-//         this.player.beer.uses++
-//       }else if(rng>15&&rng<=45){
-//         console.log("cigar ++")
-
-//         this.player.cigar.uses++
-//       }else if(rng>45&&rng<=50){
-//         console.log("razor ++")
-
-//         this.player.razor.uses++
-//       }
-//     }
-//   }
-
   animate(framesCounter) {
     if (framesCounter % 30 == 0) {
       this.image.framesIndex++; //Cambiamos el frame de la imagen cada 60 fps.
@@ -94,6 +63,26 @@ class Tangana {
       }
     }
   }
+
+  staticDraw(){
+    this.ctx.drawImage(
+      this.image,
+      this.posX,
+      this.posY,
+      this.width,
+      this.height
+    );
+  }
+
+  drawLifeBar(){
+    this.ctx.fillStyle = 'black'
+    this.ctx.strokeRect(this.posX+50, this.posY, this.barW, 30)
+    this.ctx.fillStyle = 'white'
+    this.ctx.fillRect(this.posX+50, this.posY, this.barW, 30)
+    this.ctx.fillStyle = 'red'
+    this.ctx.fillRect(this.posX+50, this.posY, this.life/3, 30)
+  }
+
 
   setListeners() {
     document.onkeydown = e => {

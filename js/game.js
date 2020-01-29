@@ -49,18 +49,17 @@ const game = {
         this.interval = setInterval(() => {
             this.framesCounter++
             if (this.framesCounter > 1000) this.framesCounter = 0
-
+//switch
             if(this.stage===1){
                 this.clear()
                 this.flacoDrawAll()
                 this.ceci.loadSuper(this.framesCounter)
-                if(this.framesCounter % 20 == 0) this.flacoActions()
+                if(this.framesCounter % 25 == 0) this.flacoActions()
 
             }else if(this.stage===2){
-
-                this.clear()
-                this.bossDrawAll()
+                
                 if(!this.isDialoging){
+                    this.bossDrawAll()
                     this.ceci.loadSuper(this.framesCounter)
                     if(this.framesCounter % 15 == 0) this.bossActions()
                 }
@@ -71,11 +70,14 @@ const game = {
                 this.endDrawAll()
             }else if(this.stage===4){
                 this.clear
-                this.endDrawAll()
+                this.winDrawAll()
                 console.log("cambiame")
             }
 
         }, 1000 / this.fps)
+    },
+    clear(){
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     },
 
     flacoActions(){
@@ -87,11 +89,13 @@ const game = {
         if(this.arrFlacos[this.fkCounter].isDead){
             // console.log("Flaquito muerto")
             this.arrFlacos[this.fkCounter].rngItems()
-            this.ceci.life+=5
-            this.fkDmg+=0.5
+            this.ceci.life+=10
+            this.fkDmg+=0.3
             this.fkCounter++
             if(this.fkLife<200)this.fkLife+=10
             // console.log("Añadiendo flaco")
+            //en lugar de isdead, eliminar enemigo del array y que ceci ataque siempre a enemigos[0]
+            // o sustituyendo una propiedad
             this.arrFlacos.push(new Flaco(this.ctx,this.canvas.width,this.canvas.height,this.ceci))
             this.arrFlacos[this.fkCounter].life = this.fkLife
             this.arrFlacos[this.fkCounter].barW = this.fkLife
@@ -102,14 +106,11 @@ const game = {
             this.ceci.setCurrentTarget(this.arrFlacos[this.fkCounter])
         }
 
-        if(this.fkCounter===2){
+        if(this.fkCounter===10){
             this.setBossFight()
         }
     },
     
-    clear(){
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    },
     flacoDrawAll(){
         this.back.draw()
         this.ceci.draw(this.framesCounter)
@@ -119,23 +120,25 @@ const game = {
     setBossFight(){
         this.back.image.src="img/bg4.jpg"
         this.ceci.setCurrentTarget(this.tangana)
-        this.ceci.life=200
-        this.stage=2    
+        this.ceci.life=250
+        this.stage=2
+        this.isDialoging=true
+        this.ceci.isDialoging=true
+        
         setTimeout(() => {
-            alert("hola")
-            this.isDialoging=true
-            this.ceci.isDialoging=true
+            this.dialogueDraw(this.framesCounter)
             setTimeout(() => {
                 alert("han pasado 10 segundo")
                 this.isDialoging=false
                 this.ceci.isDialoging=false
-            }, 10000);
+                this.tangana.image.src="img/ctSprite.png"
+            }, 2000);
         },100);
     },
     bossDrawAll(){
         this.back.draw()
         this.ceci.draw(this.framesCounter)
-        this.tangana.draw(this.framesCounter)
+        this.tangana.motionDraw(this.framesCounter)
     },
 
     bossActions(){
@@ -148,31 +151,40 @@ const game = {
             this.gameWin()
         }
     },
+
+    dialogueDraw(){
+        this.clear()
+        this.back.draw()
+        this.tangana.staticDraw()
+        this.ceci.dialogueDraw(this.framesCounter)
+    },
+    winDrawAll(){
+        this.back.image.src="img/bg2.png"
+        this.tangana.image.src="img/deadTangana.png"
+        this.back.draw()
+        this.ceci.winDraw(this.framesCounter)
+        this.tangana.staticDraw()
+    },
     gameWin(){
-        this.back.image.src="img/endBG.png"
-        this.ceci.image.src="img/razor.png"
-        this.ceci.image.frames=2
-        this.ceci.posX=this.width/2-this.ceci.width
-        this.ceci.posY=this.width/2-this.ceci.height
-        
         this.stage=4
         console.log("HAS GANADO PERO SIGUES SIENDO UN PANOLI")
     },
+
     endDrawAll(){
+        
+        this.back.image.src="img/endBG.png"
+        this.ceci.image.src="img/deadCeciSprite.png"
+        this.ceci.image.frames=2
+        this.ceci.posX=0
+
         this.back.draw()
         this.ceci.deadDraw(this.framesCounter)
+        this.tangana.staticDraw()
+        
     },
     gameOver() {
         //Gameover detiene el juego.
-        
-        this.back.image.src="img/endBG.png"
-        this.ceci.image.src="img/razor.png"
-        this.ceci.image.frames=2
-        this.ceci.posX=this.width/2-this.ceci.width
-        this.ceci.posY=this.width/2-this.ceci.height
-        
         this.stage=3
-        
         console.log("HAS PERDIDO PANOLI")
       }
 }   

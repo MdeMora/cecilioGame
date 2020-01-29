@@ -28,7 +28,7 @@ class Ceci {
     this.isDialoging = isDialoging
 
     this.life=250
-    this.dmg=4
+    this.dmg=2
     this.superDmg=0
 
     this.beer= new Beer(this.ctx,this.gameWidth,this.gameHeight)
@@ -63,7 +63,23 @@ class Ceci {
     this.animate(framesCounter) //Funcion que anima los frames.
     
   }
-  deadDraw(framesCounter) {
+  dialogueDraw(framesCounter){
+    this.ctx.drawImage(
+      this.image,
+      this.image.framesIndex * Math.floor(this.image.width / this.image.frames), //Punto x donde empieza a recortar
+      0, //Punto y donde empieza a recortar
+      Math.floor(this.image.width / this.image.frames), //Punto x donde termina de recortar
+      this.image.height, //Punto y donde termina de recortar
+      this.posX,
+      this.posY,
+      this.width,
+      this.height,
+      )
+
+      this.animate(framesCounter) //Funcion que anima los frames.
+
+  }
+  winDraw(framesCounter) {
     this.ctx.drawImage(
       this.image,
       this.image.framesIndex * Math.floor(this.image.width / this.image.frames), //Punto x donde empieza a recortar
@@ -77,6 +93,22 @@ class Ceci {
       )
       
     this.animate(framesCounter) //Funcion que anima los frames.
+    
+  }
+  deadDraw(framesCounter) {
+    this.ctx.drawImage(
+      this.image,
+      this.image.framesIndex * Math.floor(this.image.width / this.image.frames), //Punto x donde empieza a recortar
+      0, //Punto y donde empieza a recortar
+      Math.floor(this.image.width / this.image.frames), //Punto x donde termina de recortar
+      this.image.height, //Punto y donde termina de recortar
+      this.posX,
+      this.posY,
+      this.width,
+      this.height,
+      )
+      
+    this.deadAnimate(framesCounter) //Funcion que anima los frames.
     
   }
 
@@ -93,8 +125,22 @@ class Ceci {
     }
   }
 
+  deadAnimate(framesCounter) {
+    if (framesCounter % 20 == 0) {
+      this.image.framesIndex++ //Cambiamos el frame de la imagen cada 5 fps.
+      if (this.image.framesIndex > 1) {
+        this.image.framesIndex = 0
+      }
+    }
+  }
+
   attack(){
     return this.dmg
+  }
+  
+  //se podrian reducir a una funcion utilizando un parametro para añadir/reducir daño
+  superAttack(){
+    return this.superDmg
   }
 
   attackDraw(){
@@ -112,10 +158,8 @@ class Ceci {
       
     // this.animateAttack() //Funcion que anima los frames.
   }
-
-  superAttack(){
-    return this.superDmg
-  }
+  //animateattack dice activar la animacion
+  //cuando llega el ultimo sprite dice desactivar animacion
 
   loadSuper(framesCounter){
     if(this.superDmg<=100){
