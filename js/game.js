@@ -62,6 +62,7 @@ const game = {
                 this.ceci.framesCounter=this.framesCounter
                 
                 if(!this.isDialoging){
+                    this.clear()
                     this.bossDrawAll()
                     this.ceci.loadSuper()
                     if(this.framesCounter % 15 == 0) this.bossActions()
@@ -88,10 +89,8 @@ const game = {
     //------ STAGE 1 - FLACO ----------
     flacoActions(){
         this.ceci.recieveDamage(this.arrFlacos[this.fkCounter].attack())
-        if(this.ceci.isDead){
-            this.gameOver()
-        }
-
+        this.ceci.isDead ? this.gameOver() : null
+        this.arrFlacos[this.fkCounter].life<=0 ? this.arrFlacos[this.fkCounter].isDead = true : null
         if(this.arrFlacos[this.fkCounter].isDead){
             // console.log("Flaquito muerto")
             this.arrFlacos[this.fkCounter].rngItems()
@@ -112,9 +111,8 @@ const game = {
             this.ceci.setCurrentTarget(this.arrFlacos[this.fkCounter])
         }
 
-        if(this.fkCounter===10){
-            this.setBossFight()
-        }
+        this.fkCounter===2?this.setBossFight():null
+        
     },
     
     flacoDrawAll(){
@@ -143,18 +141,21 @@ const game = {
         
         setTimeout(() => {
             this.dialogueDraw(this.framesCounter)
+            console.log(this.framesCounter)
+            if(this.framesCounter % 999 == 0) this.drawDialogues()
             setTimeout(() => {
                 alert("han pasado 10 segundo")
                 this.isDialoging=false
                 this.ceci.isDialoging=false
                 this.tangana.image.src="img/ctSprite.png"
-            }, 2000);
+            }, 10000);
         },100);
     },
     bossDrawAll(){
         this.back.draw()
-        this.ceci.draw()
         this.tangana.motionDraw(this.framesCounter)
+        this.ceci.draw()
+        this.ceci.drawAnimations()
     },
     bossActions(){
         console.log("he sido llamado")
@@ -166,6 +167,21 @@ const game = {
         if(this.tangana.isDead){
             this.gameWin()
         }
+    },
+    drawDialogues(){
+        this.dialogueSprite= new Image()
+        console.log("mellaman")
+        this.ctx.drawImage(
+            this.razorEffect,
+            this.razorEffect.framesIndex * Math.floor(this.razorEffect.width / this.razorEffect.frames), //Punto x donde empieza a recortar
+            0, //Punto y donde empieza a recortar
+            Math.floor(this.razorEffect.width / this.razorEffect.frames), //Punto x donde termina de recortar
+            this.razorEffect.height, //Punto y donde termina de recortar
+            this.posX,
+            this.posY,
+            this.width/2,
+            this.height/2,
+            )
     },
 
     //------ STAGE 4 - WIN ----------

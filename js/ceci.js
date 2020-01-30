@@ -54,7 +54,7 @@ class Ceci {
     this.superDmg=0
 
     this.beer= new Beer(this.ctx,this.gameWidth,this.gameHeight)
-    this.razor= new Razor(this.ctx,this.gameWidth,this.gameHeight)
+    this.razor= new Razor(this.ctx,this.gameWidth,this.gameHeight,this.superDmg)
     this.cigar= new Cigar(this.ctx,this.gameWidth,this.gameHeight)
     
     this.currentTarget = undefined
@@ -315,9 +315,11 @@ class Ceci {
   }
 
   loadSuper(){
-    if(this.superDmg<=100){
-      if(this.framesCounter % 100 == 0){
+    if(this.superDmg<100){
+      if(this.framesCounter % 150 == 0){
         this.superDmg+=10
+        this.cigar.superDmg=this.superDmg
+        console.log(this.superDmg)
       }
     }else{
       this.isSuper = true
@@ -374,7 +376,11 @@ class Ceci {
           this.dmg += this.razor.action()
             break
         case this.keys.E:
-          this.superDmg += this.cigar.action()
+          this.cigar.superDmg=this.superDmg
+          if(!this.isSuper){
+            this.superDmg += this.cigar.action()
+          }
+          this.drawSuperBar()
             break
         case this.keys.SPACE:
           if(this.isSuper){

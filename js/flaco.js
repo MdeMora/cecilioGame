@@ -33,11 +33,7 @@ class Flaco {
   }
 
   recieveDamage(dmg){
-    if(this.life <= 0){
-        this.isDead = true
-    }else{
-        this.life -= dmg
-    }
+    this.life <= 0 ? this.isDead = true : this.life -= dmg
   }
 
   draw(framesCounter) {
@@ -91,10 +87,10 @@ class Flaco {
     }
   }
 
-  setListeners() {
-    document.onkeydown = e => {
+  // setListeners() {
+  //   document.onkeydown = e => {
       
-    };
-  }
+  //   };
+  // }
 
 }

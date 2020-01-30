@@ -1,5 +1,5 @@
 class Cigar{
-    constructor(ctx,w,h){
+    constructor(ctx,w,h,superDmg){
         this.ctx=ctx
         this.gameWidth = w
         this.gameHeight = h
@@ -10,6 +10,7 @@ class Cigar{
         this.posX = this.gameWidth *0.03 + 80
         this.posY = 50
         this.uses = 10;
+        this.superDmg = superDmg
     }
 
     getUses(){
@@ -23,9 +24,9 @@ class Cigar{
     action(){
         if(this.uses>0){
             this.uses--
-            return 90
+            return 100 - this.superDmg
         }else{
-            return -10
+            return 0
         }
     }
         

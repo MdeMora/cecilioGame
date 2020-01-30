@@ -32,13 +32,8 @@ class Tangana {
   }
 
   recieveDamage(dmg){
-    if(this.life <= 0){
-        this.isDead = true
-    }else{
-        this.life -= dmg
-    }
+    this.life <= 0 ? this.isDead = true : this.life -=dmg
   }
-
   motionDraw(framesCounter) {
     this.ctx.drawImage(
       this.image,
@@ -84,10 +79,10 @@ class Tangana {
   }
 
 
-  setListeners() {
-    document.onkeydown = e => {
+  // setListeners() {
+  //   document.onkeydown = e => {
       
-    };
-  }
+  //   };
+  // }
 
 }

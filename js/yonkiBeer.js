@@ -9,7 +9,7 @@ class Beer{
         this.image.src = "img/ntd/lata.jpeg"
         this.posX = this.gameWidth *0.03
         this.posY = 50
-        this.uses = 1;
+        this.uses = 20;
     }
 
     getUses(){
