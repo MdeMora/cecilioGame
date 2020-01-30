@@ -9,7 +9,7 @@ class Cigar{
         this.image.src = "img/ntd/poro.jpeg"
         this.posX = this.gameWidth *0.03 + 80
         this.posY = 50
-        this.uses = 10;
+        this.uses = 1;
         this.superDmg = superDmg
     }
 
@@ -26,7 +26,7 @@ class Cigar{
             this.uses--
             return 100 - this.superDmg
         }else{
-            return 0
+            return -10
         }
     }
         

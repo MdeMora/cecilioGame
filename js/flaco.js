@@ -16,8 +16,6 @@ class Flaco {
     this.image.frames = 3; //Indicamos el numero de frames que tiene la imagen
     this.image.framesIndex = 0; //Frame actual menos 1, lo usaremos para recortar la imagen en drawImage
 
-    this.setListeners(); //Llamamos al listener para que desde el primer momento el jugador responda.
-
     this.life=100
     this.dmg=2
 
@@ -63,14 +61,14 @@ class Flaco {
     console.log(rng)
 
     if(this.isDead){
-      if(rng <= 15){
+      if(rng <= 20){
         console.log("Beer ++")
         this.player.beer.uses++
-      }else if(rng>15&&rng<=45){
+      }else if(rng>20&&rng<=50){
         console.log("cigar ++")
 
         this.player.cigar.uses++
-      }else if(rng>45&&rng<=50){
+      }else if(rng>50&&rng<=56){
         console.log("razor ++")
 
         this.player.razor.uses++

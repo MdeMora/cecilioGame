@@ -1,4 +1,77 @@
-*{
-    margin:0px;
-    padding: 0px;
+@font-face {
+    font-family: oldLondon;
+    src: url(OldLondon.ttf);
+  }
+
+img{
+    width:100%
+}
+body{
+    background-color: whitesmoke;
+}
+header{
+    display: flex;
+    justify-content: center;
+}
+header h1{
+    font-family: oldLondon;
+    letter-spacing: 10px;
+    font-size: 100px;
+}
+
+aside{
+    display: flex;
+    justify-content: center;
+    background-color: black;
+    margin:50px 0px
+
+}
+aside a{
+    display: block;
+    border: 2px solid white;
+    padding: 20px 100px;
+    margin: 20px;
+    color:red;
+    text-decoration: none;
+}
+
+aside a:hover{
+    color:white;
+    text-decoration: none;
+}
+
+main{
+    display: flex;
+}
+ul{
+    list-style: none;
+}
+li{
+    padding:20px
+}
+figure{
+    padding:10px;
+    border-left: 1px solid black;
+}
+
+.padding{
+    padding:50px 220px
+}
+
+section{
+    display:flex;
+    justify-content: center;
+    border-top:1px solid black;
+    flex-direction: column;
+}
+section h2{
+    padding: 30px;
+}
+section div{
+    display: flex;
+    justify-content: space-around;
+}
+section div iframe{
+    display: inline-block;
+    padding:20px
 }

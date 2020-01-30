@@ -4,11 +4,9 @@ class Ceci {
     this.gameWidth = w
     this.gameHeight = h
     this.framesCounter=framesCounter
-
     
     this.width = 440
     this.height = 440
-    
     
     this.posX = this.gameWidth*0.03
     this.posY0 = this.gameHeight - this.height //Guardamos la posicion original para usarla como suelo
@@ -50,7 +48,7 @@ class Ceci {
     this.isDialoging = isDialoging
 
     this.life=250
-    this.dmg=2
+    this.dmg=2.5
     this.superDmg=0
 
     this.beer= new Beer(this.ctx,this.gameWidth,this.gameHeight)
@@ -368,19 +366,25 @@ class Ceci {
           this.currentTarget.recieveDamage(this.attack())
             break
         case this.keys.Q:
-          this.wantHealMotion=true
-          this.life += this.beer.action()
+          if(this.beer.uses > 0){
+            this.wantHealMotion=true
+            this.life += this.beer.action()
+          } 
             break
         case this.keys.W:
-          this.wantRazorMotion=true
-          this.dmg += this.razor.action()
+          if(this.razor.uses>0){
+            this.wantRazorMotion=true
+            this.dmg += this.razor.action()
+          }
             break
         case this.keys.E:
-          this.cigar.superDmg=this.superDmg
-          if(!this.isSuper){
-            this.superDmg += this.cigar.action()
+          if(this.cigar.uses>0){
+            this.cigar.superDmg=this.superDmg
+            if(!this.isSuper){
+              this.superDmg += this.cigar.action()
+            }
+            this.drawSuperBar()
           }
-          this.drawSuperBar()
             break
         case this.keys.SPACE:
           if(this.isSuper){

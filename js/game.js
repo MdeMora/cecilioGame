@@ -3,7 +3,7 @@ const game = {
     description: "Un juego de er ceci",
     version: "1.0",
     art : "Marina Merino Redondo",
-    license : "undefined",
+    license : undefined,
     canvas: undefined,
     ctx: undefined,
     width: undefined,
@@ -25,6 +25,7 @@ const game = {
     fkLife:100,
     stage:1,
     isDialoging:false,
+
 
     //------FUNCIONES BASICAS DEL JUEGO------
     init(){
@@ -65,9 +66,10 @@ const game = {
                     this.clear()
                     this.bossDrawAll()
                     this.ceci.loadSuper()
-                    if(this.framesCounter % 15 == 0) this.bossActions()
+                    if(this.framesCounter % 15 === 0) this.bossActions()
+                }else{
+                    this.dialogueDraw()
                 }
-
             }else if(this.stage===3){
                 this.ceci.framesCounter=this.framesCounter
 
@@ -79,7 +81,6 @@ const game = {
                 this.clear
                 this.winDrawAll()
             }
-
         }, 1000 / this.fps)
     },//INTERVALO
     clear(){
@@ -111,10 +112,9 @@ const game = {
             this.ceci.setCurrentTarget(this.arrFlacos[this.fkCounter])
         }
 
-        this.fkCounter===2?this.setBossFight():null
+        this.fkCounter===10?this.setBossFight():null
         
     },
-    
     flacoDrawAll(){
         this.back.draw()
         this.arrFlacos[this.fkCounter].draw(this.framesCounter)
@@ -128,27 +128,30 @@ const game = {
         this.back.draw()
         this.tangana.staticDraw()
         this.ceci.dialogueDraw()
+        this.drawDialogueSprite()
     },
 
     //------ STAGE 2 - BOSSFIGHT ----------
     setBossFight(){
+        
         this.back.image.src="img/bg4.jpg"
         this.ceci.setCurrentTarget(this.tangana)
         this.ceci.life=250
         this.stage=2
         this.isDialoging=true
         this.ceci.isDialoging=true
+
+        this.dialogueSprite = new Image()
+        this.dialogueSprite.src="img/dialog.png"
+        this.dialogueSprite.frames = 11
+        this.dialogueSprite.framesIndex = 0
         
         setTimeout(() => {
-            this.dialogueDraw(this.framesCounter)
-            console.log(this.framesCounter)
-            if(this.framesCounter % 999 == 0) this.drawDialogues()
             setTimeout(() => {
-                alert("han pasado 10 segundo")
                 this.isDialoging=false
                 this.ceci.isDialoging=false
                 this.tangana.image.src="img/ctSprite.png"
-            }, 10000);
+            }, 15000);
         },100);
     },
     bossDrawAll(){
@@ -158,7 +161,6 @@ const game = {
         this.ceci.drawAnimations()
     },
     bossActions(){
-        console.log("he sido llamado")
         this.ceci.recieveDamage(this.tangana.attack())
         if(this.ceci.isDead){
             this.tangana.image.src="img/tangawin.png"
@@ -168,20 +170,24 @@ const game = {
             this.gameWin()
         }
     },
-    drawDialogues(){
-        this.dialogueSprite= new Image()
-        console.log("mellaman")
+    drawDialogueSprite(){
         this.ctx.drawImage(
-            this.razorEffect,
-            this.razorEffect.framesIndex * Math.floor(this.razorEffect.width / this.razorEffect.frames), //Punto x donde empieza a recortar
+            this.dialogueSprite,
+            this.dialogueSprite.framesIndex * Math.floor(this.dialogueSprite.width / this.dialogueSprite.frames), //Punto x donde empieza a recortar
             0, //Punto y donde empieza a recortar
-            Math.floor(this.razorEffect.width / this.razorEffect.frames), //Punto x donde termina de recortar
-            this.razorEffect.height, //Punto y donde termina de recortar
-            this.posX,
-            this.posY,
-            this.width/2,
-            this.height/2,
+            Math.floor(this.dialogueSprite.width / this.dialogueSprite.frames), //Punto x donde termina de recortar
+            this.dialogueSprite.height, //Punto y donde termina de recortar
+            this.width*0.3,
+            0,
+            500,
+            500
             )
+        if(this.framesCounter % 100 === 0){
+            this.dialogueSprite.framesIndex++ //Cambiamos el frame de la imagen cada 5 fps.
+            // if (this.dialogueSprite.framesIndex > 10) {
+            //   this.dialogueSprite.framesIndex = 10
+            // }
+        } 
     },
 
     //------ STAGE 4 - WIN ----------

@@ -16,8 +16,6 @@ class Tangana {
     this.image.frames = 2; //Indicamos el numero de frames que tiene la imagen
     this.image.framesIndex = 0; //Frame actual menos 1, lo usaremos para recortar la imagen en drawImage
 
-    this.setListeners(); //Llamamos al listener para que desde el primer momento el jugador responda.
-
     this.life=800
     this.dmg=2.5
 
