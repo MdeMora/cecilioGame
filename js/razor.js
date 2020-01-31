@@ -9,7 +9,7 @@ class Razor{
         this.image.src = "img/ntd/navaj.jpeg"
         this.posX = this.gameWidth *0.03 + 40
         this.posY = 50
-        this.uses = 0;
+        this.uses = 1;
     }
 
     getUses(){
