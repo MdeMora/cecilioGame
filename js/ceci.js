@@ -38,9 +38,14 @@ class Ceci {
     this.razorEffect.framesIndex = 0
 
     this.superEffect = new Image()
-    this.superEffect.frames = 4
+    this.superEffect.frames = 5
     this.superEffect.src = "img/super.png"
     this.superEffect.framesIndex = 0
+
+    this.smokeEffect = new Image()
+    this.smokeEffect.frames = 5
+    this.smokeEffect.src = "img/smoke.png"
+    this.smokeEffect.framesIndex = 0
 
     this.bgMusic = new Sound("msc/ceciKush.mp3")
     
@@ -48,7 +53,7 @@ class Ceci {
     this.isDialoging = isDialoging
 
     this.life=250
-    this.dmg=2.5
+    this.dmg=3
     this.superDmg=0
 
     this.beer= new Beer(this.ctx,this.gameWidth,this.gameHeight)
@@ -95,6 +100,7 @@ class Ceci {
     this.healDraw()
     this.razorDraw()
     this.superDraw()
+    this.smokeDraw()
   }
   dialogueDraw(){
     this.ctx.drawImage(
@@ -228,7 +234,23 @@ class Ceci {
         this.animateRazor()
     }
   }
-  smokeDraw(){}
+
+  smokeDraw(){
+    if(this.wantSmokeMotion){
+      this.ctx.drawImage(
+        this.smokeEffect,
+        this.smokeEffect.framesIndex * Math.floor(this.smokeEffect.width / this.smokeEffect.frames), //Punto x donde empieza a recortar
+        0, //Punto y donde empieza a recortar
+        Math.floor(this.smokeEffect.width / this.smokeEffect.frames), //Punto x donde termina de recortar
+        this.smokeEffect.height, //Punto y donde termina de recortar
+        this.posX,
+        this.posY,
+        this.width,
+        this.height,
+        )
+        this.animateSmoke()
+    }
+  }
   superDraw(){
     this.randomNumber ? null : this.randomNumber = Math.random()
     if(this.wantSuperMotion){
@@ -285,7 +307,13 @@ class Ceci {
     }
   }
   animateSmoke(){
-
+    if (this.framesCounter % 4 === 0) {
+      this.smokeEffect.framesIndex++ //Cambiamos el frame de la imagen cada 5 fps.
+      if (this.smokeEffect.framesIndex > this.smokeEffect.frames ) {
+        this.smokeEffect.framesIndex = 0
+        this.wantSmokeMotion=false
+      }
+    }
   }
   animateSuper(){
     if (this.framesCounter % 5 === 0) {
@@ -324,11 +352,7 @@ class Ceci {
     }
   }
   recieveDamage(dmg){
-    if(this.life <= 0){
-      this.isDead = true
-    }else{
-      this.life -= dmg
-    }
+    this.life <= 0?this.isDead=true:this.life -= dmg
   }
   //----------------INTERFAZ-----------------
   drawSuperBar(){

@@ -192,7 +192,7 @@ const game = {
 
     //------ STAGE 4 - WIN ----------
     winDrawAll(){
-        this.back.image.src="img/bg2.png"
+        this.back.image.src="img/winwin.png"
         this.tangana.image.src="img/deadTangana.png"
         this.back.draw()
         this.ceci.winDraw()
@@ -206,7 +206,7 @@ const game = {
     //-------STAGE 3 - PANOLI- -------
     endDrawAll(){
         
-        this.back.image.src="img/endBG.png"
+        this.back.image.src="img/lose.png"
         this.ceci.image.src="img/deadCeciSprite.png"
         this.ceci.image.frames=2
         this.ceci.posX=0

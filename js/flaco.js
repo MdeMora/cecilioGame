@@ -61,14 +61,14 @@ class Flaco {
     console.log(rng)
 
     if(this.isDead){
-      if(rng <= 20){
+      if(rng <= 25){
         console.log("Beer ++")
         this.player.beer.uses++
-      }else if(rng>20&&rng<=50){
+      }else if(rng>25&&rng<=55){
         console.log("cigar ++")
 
         this.player.cigar.uses++
-      }else if(rng>50&&rng<=56){
+      }else if(rng>55&&rng<=63){
         console.log("razor ++")
 
         this.player.razor.uses++

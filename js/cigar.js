@@ -28,6 +28,8 @@ class Cigar{
         }else{
             return -10
         }
+
+        // this.uses>0?100-this.superDmg : null
     }
         
     draw(){

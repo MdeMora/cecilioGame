@@ -16,7 +16,7 @@ class Tangana {
     this.image.frames = 2; //Indicamos el numero de frames que tiene la imagen
     this.image.framesIndex = 0; //Frame actual menos 1, lo usaremos para recortar la imagen en drawImage
 
-    this.life=800
+    this.life=900
     this.dmg=2.5
 
     this.isDead = false
