@@ -112,7 +112,7 @@ const game = {
             this.ceci.setCurrentTarget(this.arrFlacos[this.fkCounter])
         }
 
-        this.fkCounter===5?this.setBossFight():null
+        this.fkCounter===10?this.setBossFight():null
         
     },
     flacoDrawAll(){

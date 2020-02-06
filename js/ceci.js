@@ -53,7 +53,7 @@ class Ceci {
     this.isDialoging = isDialoging
 
     this.life=250
-    this.dmg=5
+    this.dmg=3
     this.superDmg=0
 
     this.beer= new Beer(this.ctx,this.gameWidth,this.gameHeight)
